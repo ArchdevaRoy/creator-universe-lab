@@ -12,6 +12,7 @@ import {
   Crown,
   Menu,
   X,
+  Radio,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,6 +25,7 @@ const navItems = [
   { label: "Calendar", icon: Calendar, path: "/calendar" },
   { label: "Hook Analyzer", icon: BarChart3, path: "/analyzer" },
   { label: "Analytics", icon: BarChart3, path: "/analytics" },
+  { label: "Creator Feed", icon: Radio, path: "/feed" },
 ];
 
 const bottomItems = [

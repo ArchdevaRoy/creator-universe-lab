@@ -14,6 +14,8 @@ import HookAnalyzer from "./pages/HookAnalyzer";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import SettingsPage from "./pages/SettingsPage";
 import Pricing from "./pages/Pricing";
+import FeedPage from "./pages/FeedPage";
+import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ const App = () => (
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppLayout>
