@@ -51,6 +51,50 @@
     --font-display: 'Space Mono', monospace;
     --font-body: 'Space Grotesk', sans-serif;
   }
+
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+
+    --primary: 0 0% 12%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 12%;
+
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 92%;
+    --accent-foreground: 0 0% 12%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 60%;
+
+    --sidebar-background: 0 0% 97%;
+    --sidebar-foreground: 0 0% 40%;
+    --sidebar-primary: 0 0% 12%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 12%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 60%;
+
+    --gradient-punk: linear-gradient(135deg, hsl(0 0% 90%), hsl(0 0% 98%));
+    --gradient-glow: linear-gradient(180deg, hsl(0 0% 85%) 0%, transparent 100%);
+    --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.08);
+    --shadow-elevated: 0 8px 30px -8px hsl(0 0% 0% / 0.12);
+  }
 }
 
 @layer base {
@@ -76,14 +120,51 @@
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: hsl(0 0% 5%);
+    background: hsl(var(--card));
   }
   ::-webkit-scrollbar-thumb {
-    background: hsl(0 0% 20%);
+    background: hsl(var(--border));
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(0 0% 30%);
+    background: hsl(var(--muted-foreground));
+  }
+}
+
+@layer utilities {
+  .text-gradient-punk {
+    background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--muted-foreground)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-gradient {
+    border-image: linear-gradient(135deg, hsl(var(--border)), hsl(var(--background))) 1;
+  }
+
+  .bg-punk-card {
+    background: var(--gradient-punk);
+  }
+
+  .glow-line {
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+    height: 1px;
+  }
+
+  .animate-in {
+    animation: fadeSlideIn 0.4s ease-out;
+  }
+
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
