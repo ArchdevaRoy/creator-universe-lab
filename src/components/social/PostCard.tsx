@@ -2,14 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Heart,
-  MessageCircle,
-  Repeat2,
-  Share,
-  Bookmark,
-  MoreHorizontal,
-  Play,
+  Heart, MessageCircle, Repeat2, Share, Bookmark, MoreHorizontal, Play, Pause,
 } from "lucide-react";
+import { VideoPlayer } from "./VideoPlayer";
 
 export interface PostData {
   id: string;
@@ -85,18 +80,25 @@ export function PostCard({ post }: PostCardProps) {
       <p className="px-4 pb-3 text-sm text-foreground/90 leading-relaxed">{post.content}</p>
 
       {/* Media */}
-      <div className="relative aspect-[9/16] max-h-[480px] bg-muted mx-4 rounded-sm overflow-hidden mb-3">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-muted-foreground text-xs font-display uppercase tracking-widest">
-            {post.mediaType === "video" ? "Video Preview" : "Image"}
+      <div className="mx-4 mb-3">
+        {post.mediaType === "video" ? (
+          <VideoPlayer
+            src={post.mediaThumbnail || undefined}
+            aspectRatio="9/16"
+            className="max-h-[480px]"
+          />
+        ) : (
+          <div className="relative aspect-[4/5] max-h-[480px] bg-muted rounded-sm overflow-hidden">
+            {post.mediaThumbnail ? (
+              <img src={post.mediaThumbnail} alt="" className="w-full h-full object-cover" />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-xs text-muted-foreground font-display uppercase tracking-widest">
+                  Image
+                </p>
+              </div>
+            )}
           </div>
-        </div>
-        {post.mediaType === "video" && (
-          <button className="absolute inset-0 flex items-center justify-center">
-            <div className="w-12 h-12 rounded-full bg-foreground/20 backdrop-blur-sm flex items-center justify-center">
-              <Play className="w-5 h-5 text-foreground fill-foreground" />
-            </div>
-          </button>
         )}
       </div>
 
@@ -106,9 +108,7 @@ export function PostCard({ post }: PostCardProps) {
           <button
             onClick={toggleLike}
             className={`flex items-center gap-1.5 px-2 py-1 rounded-sm text-xs transition-colors ${
-              liked
-                ? "text-destructive"
-                : "text-muted-foreground hover:text-foreground"
+              liked ? "text-destructive" : "text-muted-foreground hover:text-foreground"
             }`}
           >
             <Heart className={`w-4 h-4 ${liked ? "fill-destructive" : ""}`} />
@@ -121,9 +121,7 @@ export function PostCard({ post }: PostCardProps) {
           <button
             onClick={toggleRepost}
             className={`flex items-center gap-1.5 px-2 py-1 rounded-sm text-xs transition-colors ${
-              reposted
-                ? "text-green-500"
-                : "text-muted-foreground hover:text-foreground"
+              reposted ? "text-green-500" : "text-muted-foreground hover:text-foreground"
             }`}
           >
             <Repeat2 className="w-4 h-4" />

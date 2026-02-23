@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, TrendingUp, Clock, Users } from "lucide-react";
+import { Sparkles, TrendingUp, Clock, Users, Plus } from "lucide-react";
 import { StoriesBar } from "@/components/social/StoriesBar";
 import { PostCard, PostData } from "@/components/social/PostCard";
+import { CreatePostDialog } from "@/components/social/CreatePostDialog";
+import { Button } from "@/components/ui/button";
 
 const mockPosts: PostData[] = [
   {
     id: "1",
     author: { id: "maya", name: "Maya Chen", handle: "mayacreates", avatar: "M" },
-    content: "Just dropped a new noir-style reel using CreatorOS Script Studio. The vibe analyzer nailed the aesthetic 🎬🖤",
+    content: "Just dropped a new noir-style reel using D'arc Script Studio. The vibe analyzer nailed the aesthetic 🎬🖤",
     mediaType: "video",
     mediaThumbnail: "",
     likes: 342,
@@ -66,7 +68,34 @@ const mockPosts: PostData[] = [
     shares: 19,
     timeAgo: "12h",
   },
+  {
+    id: "6",
+    author: { id: "luna", name: "Luna Park", handle: "lunaframes", avatar: "L" },
+    content: "New cinematic preset pack dropping tomorrow. Preview reel below 👇",
+    mediaType: "video",
+    mediaThumbnail: "",
+    likes: 1200,
+    comments: 95,
+    reposts: 200,
+    shares: 55,
+    timeAgo: "1h",
+  },
+  {
+    id: "7",
+    author: { id: "kai", name: "Kai Tanaka", handle: "kaibuilds", avatar: "K" },
+    content: "World-building journal entry #47. The lore is getting deep. 🗺️",
+    mediaType: "image",
+    mediaThumbnail: "",
+    likes: 78,
+    comments: 9,
+    reposts: 3,
+    shares: 2,
+    timeAgo: "18h",
+  },
 ];
+
+// Simulated "following" list
+const followingIds = new Set(["maya", "alex", "sam"]);
 
 const tabs = [
   { id: "foryou", label: "For You", icon: Sparkles },
@@ -82,17 +111,50 @@ const container = {
 
 export default function FeedPage() {
   const [activeTab, setActiveTab] = useState("foryou");
+  const [createOpen, setCreateOpen] = useState(false);
+
+  const sortedPosts = useMemo(() => {
+    switch (activeTab) {
+      case "trending":
+        return [...mockPosts].sort((a, b) => (b.likes + b.reposts) - (a.likes + a.reposts));
+      case "following":
+        return mockPosts.filter((p) => followingIds.has(p.author.id));
+      case "latest":
+        return [...mockPosts].sort((a, b) => {
+          const parseTime = (t: string) => {
+            const num = parseInt(t);
+            if (t.includes("h")) return num;
+            if (t.includes("d")) return num * 24;
+            return num;
+          };
+          return parseTime(a.timeAgo) - parseTime(b.timeAgo);
+        });
+      case "foryou":
+      default:
+        return mockPosts;
+    }
+  }, [activeTab]);
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-6 max-w-xl mx-auto">
       {/* Header */}
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gradient-punk">
-          Creator Feed
-        </h1>
-        <p className="text-muted-foreground mt-1 font-body text-sm">
-          Discover and share with the creator community.
-        </p>
+      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gradient-punk">
+            Creator Feed
+          </h1>
+          <p className="text-muted-foreground mt-1 font-body text-sm">
+            Discover and share with the creator community.
+          </p>
+        </div>
+        <Button
+          size="sm"
+          onClick={() => setCreateOpen(true)}
+          className="gap-1.5 rounded-sm bg-foreground text-background hover:bg-foreground/90"
+        >
+          <Plus className="w-3.5 h-3.5" />
+          Create
+        </Button>
       </motion.div>
 
       {/* Stories */}
@@ -122,10 +184,17 @@ export default function FeedPage() {
 
       {/* Posts */}
       <div className="space-y-4">
-        {mockPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {sortedPosts.length > 0 ? (
+          sortedPosts.map((post) => <PostCard key={post.id} post={post} />)
+        ) : (
+          <div className="text-center py-12 text-muted-foreground text-sm">
+            <p>No posts to show in this tab yet.</p>
+          </div>
+        )}
       </div>
+
+      {/* Create Post Dialog */}
+      <CreatePostDialog open={createOpen} onOpenChange={setCreateOpen} />
     </motion.div>
   );
 }
