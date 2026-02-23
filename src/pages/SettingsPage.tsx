@@ -1,5 +1,13 @@
 import { motion } from "framer-motion";
 import { User, Bell, Shield, Palette } from "lucide-react";
+import { Link } from "react-router-dom";
+
+const sections = [
+  { icon: User, title: "Profile", desc: "Update your name, bio, and avatar", path: "/settings/profile" },
+  { icon: Bell, title: "Notifications", desc: "Configure email and push notifications", path: "/settings/notifications" },
+  { icon: Shield, title: "Account", desc: "Security, password, and data export", path: "/settings/account" },
+  { icon: Palette, title: "Appearance", desc: "Theme and display preferences", path: "/settings/appearance" },
+];
 
 export default function SettingsPage() {
   return (
@@ -9,22 +17,18 @@ export default function SettingsPage() {
         <p className="text-sm text-muted-foreground mt-1">Manage your account and preferences.</p>
       </div>
 
-      {[
-        { icon: User, title: "Profile", desc: "Update your name, bio, and avatar" },
-        { icon: Bell, title: "Notifications", desc: "Configure email and push notifications" },
-        { icon: Shield, title: "Account", desc: "Security, password, and data export" },
-        { icon: Palette, title: "Appearance", desc: "Theme and display preferences" },
-      ].map((section) => (
-        <div
+      {sections.map((section) => (
+        <Link
           key={section.title}
-          className="bg-card border border-border rounded-sm p-5 flex items-center gap-4 hover:border-muted-foreground/30 transition-colors cursor-pointer"
+          to={section.path}
+          className="bg-card border border-border rounded-sm p-5 flex items-center gap-4 hover:border-muted-foreground/30 transition-colors cursor-pointer block"
         >
           <section.icon className="w-5 h-5 text-muted-foreground" />
           <div>
             <h3 className="text-sm font-medium text-foreground">{section.title}</h3>
             <p className="text-xs text-muted-foreground">{section.desc}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </motion.div>
   );
