@@ -56,6 +56,29 @@ export async function streamDeepseekChat({
   onDone();
 }
 
+// ─── Image Generation (Lovable AI) ───────────────────────────────────
+export async function generateImage(prompt: string): Promise<string | null> {
+  const resp = await fetch(
+    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-image`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      },
+      body: JSON.stringify({ prompt }),
+    }
+  );
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({ error: "Unknown error" }));
+    throw new Error(err.error || `Image generation failed: ${resp.status}`);
+  }
+
+  const data = await resp.json();
+  return data.imageUrl || null;
+}
+
 // ─── Pinterest Boards ────────────────────────────────────────────────
 export async function fetchPinterestPins(query: string) {
   const { data, error } = await supabase.functions.invoke("pinterest-boards", {

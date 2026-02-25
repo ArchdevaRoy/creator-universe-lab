@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Film, Music, Mic, Type, ImageIcon, Upload, Sparkles, Download,
   Play, Pause, Volume2, Palette, Eye, Layers, Video, Wand2,
-  ChevronRight, ChevronLeft, X, Plus, Grid3X3, Camera, Check
+  ChevronRight, ChevronLeft, X, Plus, Grid3X3, Camera, Check, Loader2
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -11,8 +11,10 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
 import StyleVibeStep, { type SelectedStyle } from "@/components/script-studio/StyleVibeStep";
 import FinalEditorStep from "@/components/script-studio/FinalEditorStep";
+import { generateImage, generateVideo, generateTTS, generateSFX, generateMusic } from "@/lib/api";
 
 // --- Types ---
 interface Scene {
@@ -54,6 +56,98 @@ export default function ScriptStudio() {
   // Style & Vibe state
   const [selectedStyles, setSelectedStyles] = useState<SelectedStyle[]>([]);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+
+  // AI Studio state
+  const [imagePrompt, setImagePrompt] = useState("");
+  const [videoPrompt, setVideoPrompt] = useState("");
+  const [voiceoverText, setVoiceoverText] = useState("");
+  const [musicPrompt, setMusicPrompt] = useState("");
+  const [sfxPrompt, setSfxPrompt] = useState("");
+  const [voiceId, setVoiceId] = useState("JBFqnCBsd6RMkjVDRZzb");
+
+  const [generatingImage, setGeneratingImage] = useState(false);
+  const [generatingVideo, setGeneratingVideo] = useState(false);
+  const [generatingVoiceover, setGeneratingVoiceover] = useState(false);
+  const [generatingMusic, setGeneratingMusic] = useState(false);
+  const [generatingSfx, setGeneratingSfx] = useState(false);
+
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
+  const [generatedVideoData, setGeneratedVideoData] = useState<any>(null);
+  const [generatedVoiceoverUrl, setGeneratedVoiceoverUrl] = useState<string | null>(null);
+  const [generatedMusicUrl, setGeneratedMusicUrl] = useState<string | null>(null);
+  const [generatedSfxUrl, setGeneratedSfxUrl] = useState<string | null>(null);
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const handleGenerateImage = async () => {
+    if (!imagePrompt.trim()) return;
+    setGeneratingImage(true);
+    try {
+      const url = await generateImage(imagePrompt);
+      setGeneratedImageUrl(url);
+      toast.success("Image generated!");
+    } catch (e: any) {
+      toast.error(e.message || "Image generation failed");
+    } finally {
+      setGeneratingImage(false);
+    }
+  };
+
+  const handleGenerateVideo = async () => {
+    if (!videoPrompt.trim()) return;
+    setGeneratingVideo(true);
+    try {
+      const data = await generateVideo({ provider: "pixverse", prompt: videoPrompt });
+      setGeneratedVideoData(data);
+      toast.success("Video generation started!");
+    } catch (e: any) {
+      toast.error(e.message || "Video generation failed");
+    } finally {
+      setGeneratingVideo(false);
+    }
+  };
+
+  const handleGenerateVoiceover = async () => {
+    if (!voiceoverText.trim()) return;
+    setGeneratingVoiceover(true);
+    try {
+      const url = await generateTTS(voiceoverText, voiceId);
+      setGeneratedVoiceoverUrl(url);
+      toast.success("Voiceover generated!");
+    } catch (e: any) {
+      toast.error(e.message || "Voiceover generation failed");
+    } finally {
+      setGeneratingVoiceover(false);
+    }
+  };
+
+  const handleGenerateMusic = async () => {
+    if (!musicPrompt.trim()) return;
+    setGeneratingMusic(true);
+    try {
+      const url = await generateMusic(musicPrompt);
+      setGeneratedMusicUrl(url);
+      toast.success("Music generated!");
+    } catch (e: any) {
+      toast.error(e.message || "Music generation failed");
+    } finally {
+      setGeneratingMusic(false);
+    }
+  };
+
+  const handleGenerateSfx = async () => {
+    if (!sfxPrompt.trim()) return;
+    setGeneratingSfx(true);
+    try {
+      const url = await generateSFX(sfxPrompt);
+      setGeneratedSfxUrl(url);
+      toast.success("SFX generated!");
+    } catch (e: any) {
+      toast.error(e.message || "SFX generation failed");
+    } finally {
+      setGeneratingSfx(false);
+    }
+  };
 
   const handleGenerateBreakdown = () => {
     setIsGenerating(true);
@@ -264,17 +358,25 @@ export default function ScriptStudio() {
               {/* Image */}
               <TabsContent value="image" className="mt-3">
                 <div className="bg-card border border-border rounded-sm p-4 space-y-3">
-                  <textarea rows={3} placeholder="Describe the image for this scene..." defaultValue={selectedScene?.visual}
+                  <textarea rows={3} placeholder="Describe the image for this scene..." value={imagePrompt}
+                    onChange={(e) => setImagePrompt(e.target.value)}
                     className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-muted-foreground transition-colors resize-none" />
                   <div className="flex items-center gap-2">
-                    <Button size="sm" className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm"><Sparkles className="w-3 h-3" /> Generate Image</Button>
-                    <span className="text-[10px] text-muted-foreground">Style-aware · Connect Cloud to enable</span>
+                    <Button size="sm" onClick={handleGenerateImage} disabled={generatingImage || !imagePrompt.trim()} className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm">
+                      {generatingImage ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+                      {generatingImage ? "Generating..." : "Generate Image"}
+                    </Button>
+                    <span className="text-[10px] text-muted-foreground">Powered by Lovable AI</span>
                   </div>
-                  <div className="border border-dashed border-border rounded-sm aspect-video flex items-center justify-center">
-                    <div className="text-center space-y-1">
-                      <Camera className="w-6 h-6 text-muted-foreground/30 mx-auto" />
-                      <p className="text-[11px] text-muted-foreground">Generated image will appear here</p>
-                    </div>
+                  <div className="border border-dashed border-border rounded-sm aspect-video flex items-center justify-center overflow-hidden">
+                    {generatedImageUrl ? (
+                      <img src={generatedImageUrl} alt="Generated" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="text-center space-y-1">
+                        <Camera className="w-6 h-6 text-muted-foreground/30 mx-auto" />
+                        <p className="text-[11px] text-muted-foreground">Generated image will appear here</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </TabsContent>
@@ -282,17 +384,29 @@ export default function ScriptStudio() {
               {/* Video */}
               <TabsContent value="video" className="mt-3">
                 <div className="bg-card border border-border rounded-sm p-4 space-y-3">
-                  <textarea rows={3} placeholder="Describe the motion or video clip..."
+                  <textarea rows={3} placeholder="Describe the motion or video clip..." value={videoPrompt}
+                    onChange={(e) => setVideoPrompt(e.target.value)}
                     className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-muted-foreground transition-colors resize-none" />
                   <div className="flex items-center gap-2">
-                    <Button size="sm" className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm"><Video className="w-3 h-3" /> Generate Video Clip</Button>
-                    <span className="text-[10px] text-muted-foreground">5–10s clips · 9:16</span>
+                    <Button size="sm" onClick={handleGenerateVideo} disabled={generatingVideo || !videoPrompt.trim()} className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm">
+                      {generatingVideo ? <Loader2 className="w-3 h-3 animate-spin" /> : <Video className="w-3 h-3" />}
+                      {generatingVideo ? "Generating..." : "Generate Video Clip"}
+                    </Button>
+                    <span className="text-[10px] text-muted-foreground">5–10s clips · 9:16 · Pixverse</span>
                   </div>
                   <div className="border border-dashed border-border rounded-sm aspect-[9/16] max-h-[300px] flex items-center justify-center">
-                    <div className="text-center space-y-1">
-                      <Play className="w-6 h-6 text-muted-foreground/30 mx-auto" />
-                      <p className="text-[11px] text-muted-foreground">Generated clip will appear here</p>
-                    </div>
+                    {generatedVideoData ? (
+                      <div className="text-center space-y-2 p-4">
+                        <Check className="w-6 h-6 text-foreground mx-auto" />
+                        <p className="text-[11px] text-muted-foreground">Video generation submitted</p>
+                        <pre className="text-[10px] text-muted-foreground bg-background p-2 rounded-sm overflow-auto max-h-32 text-left">{JSON.stringify(generatedVideoData, null, 2)}</pre>
+                      </div>
+                    ) : (
+                      <div className="text-center space-y-1">
+                        <Play className="w-6 h-6 text-muted-foreground/30 mx-auto" />
+                        <p className="text-[11px] text-muted-foreground">Generated clip will appear here</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </TabsContent>
@@ -300,20 +414,33 @@ export default function ScriptStudio() {
               {/* Voiceover */}
               <TabsContent value="voiceover" className="mt-3">
                 <div className="bg-card border border-border rounded-sm p-4 space-y-3">
-                  <textarea rows={3} placeholder="Enter voiceover text..." defaultValue={selectedScene?.caption?.replace(/"/g, "")}
+                  <textarea rows={3} placeholder="Enter voiceover text..." value={voiceoverText}
+                    onChange={(e) => setVoiceoverText(e.target.value)}
                     className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-muted-foreground transition-colors resize-none" />
                   <div className="flex items-center gap-3">
-                    <Button size="sm" className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm"><Mic className="w-3 h-3" /> Generate Voiceover</Button>
-                    <select className="bg-background border border-border rounded-sm px-2 py-1 text-xs text-foreground">
-                      <option>Roger — Deep Male</option><option>Sarah — Warm Female</option><option>Charlie — Energetic Male</option><option>Lily — Soft Female</option>
+                    <Button size="sm" onClick={handleGenerateVoiceover} disabled={generatingVoiceover || !voiceoverText.trim()} className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm">
+                      {generatingVoiceover ? <Loader2 className="w-3 h-3 animate-spin" /> : <Mic className="w-3 h-3" />}
+                      {generatingVoiceover ? "Generating..." : "Generate Voiceover"}
+                    </Button>
+                    <select value={voiceId} onChange={(e) => setVoiceId(e.target.value)} className="bg-background border border-border rounded-sm px-2 py-1 text-xs text-foreground">
+                      <option value="JBFqnCBsd6RMkjVDRZzb">Roger — Deep Male</option>
+                      <option value="EXAVITQu4vr4xnSDxMaL">Sarah — Warm Female</option>
+                      <option value="IKne3meq5aSn9XLyUdCD">Charlie — Energetic Male</option>
+                      <option value="pFZP5JQG7iQjIQuC4Bku">Lily — Soft Female</option>
                     </select>
                   </div>
-                  <div className="border border-dashed border-border rounded-sm p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <button className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"><Play className="w-3 h-3 text-foreground" /></button>
-                      <div className="w-48 h-1 bg-border rounded-full"><div className="w-0 h-full bg-foreground rounded-full" /></div>
-                    </div>
-                    <span className="text-[10px] text-muted-foreground font-mono">0:00 / 0:00</span>
+                  <div className="border border-dashed border-border rounded-sm p-4">
+                    {generatedVoiceoverUrl ? (
+                      <audio controls src={generatedVoiceoverUrl} className="w-full h-8" />
+                    ) : (
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <button className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground"><Play className="w-3 h-3" /></button>
+                          <div className="w-48 h-1 bg-border rounded-full"><div className="w-0 h-full bg-foreground rounded-full" /></div>
+                        </div>
+                        <span className="text-[10px] text-muted-foreground font-mono">0:00 / 0:00</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </TabsContent>
@@ -321,20 +448,28 @@ export default function ScriptStudio() {
               {/* Music */}
               <TabsContent value="music" className="mt-3">
                 <div className="bg-card border border-border rounded-sm p-4 space-y-3">
-                  <textarea rows={2} placeholder="Describe the mood and style of music..." defaultValue={selectedScene?.music}
+                  <textarea rows={2} placeholder="Describe the mood and style of music..." value={musicPrompt}
+                    onChange={(e) => setMusicPrompt(e.target.value)}
                     className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-muted-foreground transition-colors resize-none" />
                   <div className="flex items-center gap-2">
-                    <Button size="sm" className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm"><Music className="w-3 h-3" /> Generate Music</Button>
-                    <select className="bg-background border border-border rounded-sm px-2 py-1 text-xs text-foreground">
-                      <option>5 seconds</option><option>10 seconds</option><option>15 seconds</option><option>30 seconds</option>
-                    </select>
+                    <Button size="sm" onClick={handleGenerateMusic} disabled={generatingMusic || !musicPrompt.trim()} className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm">
+                      {generatingMusic ? <Loader2 className="w-3 h-3 animate-spin" /> : <Music className="w-3 h-3" />}
+                      {generatingMusic ? "Generating..." : "Generate Music"}
+                    </Button>
+                    <span className="text-[10px] text-muted-foreground">ElevenLabs · ~30s clip</span>
                   </div>
-                  <div className="border border-dashed border-border rounded-sm p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <button className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"><Play className="w-3 h-3 text-foreground" /></button>
-                      <div className="w-48 h-1 bg-border rounded-full" />
-                    </div>
-                    <span className="text-[10px] text-muted-foreground font-mono">0:00</span>
+                  <div className="border border-dashed border-border rounded-sm p-4">
+                    {generatedMusicUrl ? (
+                      <audio controls src={generatedMusicUrl} className="w-full h-8" />
+                    ) : (
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <button className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground"><Play className="w-3 h-3" /></button>
+                          <div className="w-48 h-1 bg-border rounded-full" />
+                        </div>
+                        <span className="text-[10px] text-muted-foreground font-mono">0:00</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </TabsContent>
@@ -342,20 +477,28 @@ export default function ScriptStudio() {
               {/* SFX */}
               <TabsContent value="sfx" className="mt-3">
                 <div className="bg-card border border-border rounded-sm p-4 space-y-3">
-                  <textarea rows={2} placeholder="Describe the sound effect..." defaultValue={selectedScene?.sfx}
+                  <textarea rows={2} placeholder="Describe the sound effect..." value={sfxPrompt}
+                    onChange={(e) => setSfxPrompt(e.target.value)}
                     className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-muted-foreground transition-colors resize-none" />
                   <div className="flex items-center gap-2">
-                    <Button size="sm" className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm"><Volume2 className="w-3 h-3" /> Generate SFX</Button>
-                    <select className="bg-background border border-border rounded-sm px-2 py-1 text-xs text-foreground">
-                      <option>1 second</option><option>3 seconds</option><option>5 seconds</option>
-                    </select>
+                    <Button size="sm" onClick={handleGenerateSfx} disabled={generatingSfx || !sfxPrompt.trim()} className="gap-1.5 bg-foreground text-background hover:bg-foreground/90 rounded-sm">
+                      {generatingSfx ? <Loader2 className="w-3 h-3 animate-spin" /> : <Volume2 className="w-3 h-3" />}
+                      {generatingSfx ? "Generating..." : "Generate SFX"}
+                    </Button>
+                    <span className="text-[10px] text-muted-foreground">ElevenLabs · ~5s clip</span>
                   </div>
-                  <div className="border border-dashed border-border rounded-sm p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <button className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"><Play className="w-3 h-3 text-foreground" /></button>
-                      <div className="w-48 h-1 bg-border rounded-full" />
-                    </div>
-                    <span className="text-[10px] text-muted-foreground font-mono">0:00</span>
+                  <div className="border border-dashed border-border rounded-sm p-4">
+                    {generatedSfxUrl ? (
+                      <audio controls src={generatedSfxUrl} className="w-full h-8" />
+                    ) : (
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <button className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground"><Play className="w-3 h-3" /></button>
+                          <div className="w-48 h-1 bg-border rounded-full" />
+                        </div>
+                        <span className="text-[10px] text-muted-foreground font-mono">0:00</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </TabsContent>
