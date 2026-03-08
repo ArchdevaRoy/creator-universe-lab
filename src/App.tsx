@@ -20,6 +20,8 @@ import AppearanceSettings from "./pages/settings/AppearanceSettings";
 import Pricing from "./pages/Pricing";
 import FeedPage from "./pages/FeedPage";
 import ProfilePage from "./pages/ProfilePage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
