@@ -43,9 +43,7 @@ export function AppSidebar() {
       {/* Logo */}
       <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-primary rounded-sm flex items-center justify-center">
-            <span className="text-primary-foreground font-display text-xs font-bold">9</span>
-          </div>
+          <img src={logo} alt="Nine Lives" className="w-7 h-7 object-contain rounded-sm" />
           {!collapsed && (
             <span className="font-display text-sm font-bold tracking-tight text-foreground">
               Nine Lives
