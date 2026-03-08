@@ -301,7 +301,7 @@ export default function HomePage() {
       {/* ── CTA ── */}
       <section className="py-16 border-t border-border text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <Zap className="w-8 h-8 text-primary mx-auto mb-4" />
+          <Zap className="w-8 h-8 text-foreground mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-3">
             Ready to unleash your nine lives?
           </h2>
