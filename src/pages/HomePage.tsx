@@ -194,7 +194,7 @@ export default function HomePage() {
                 to={tool.link}
                 className="group block border border-border rounded-sm p-6 bg-card hover:border-muted-foreground/30 transition-all duration-200"
               >
-                <tool.icon className="w-6 h-6 text-primary mb-4" />
+                <tool.icon className="w-6 h-6 text-foreground mb-4" />
                 <h3 className="font-display text-sm font-bold text-foreground mb-1">{tool.label}</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">{tool.desc}</p>
                 <div className="mt-4 flex items-center gap-1 text-xs text-muted-foreground group-hover:text-primary transition-colors">
