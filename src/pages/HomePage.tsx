@@ -194,10 +194,10 @@ export default function HomePage() {
                 to={tool.link}
                 className="group block border border-border rounded-sm p-6 bg-card hover:border-muted-foreground/30 transition-all duration-200"
               >
-                <tool.icon className="w-6 h-6 text-primary mb-4" />
+                <tool.icon className="w-6 h-6 text-foreground mb-4" />
                 <h3 className="font-display text-sm font-bold text-foreground mb-1">{tool.label}</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">{tool.desc}</p>
-                <div className="mt-4 flex items-center gap-1 text-xs text-muted-foreground group-hover:text-primary transition-colors">
+                <div className="mt-4 flex items-center gap-1 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
                   <span>Launch</span>
                   <ArrowRight className="w-3 h-3" />
                 </div>
@@ -238,7 +238,7 @@ export default function HomePage() {
                 to={`/profile/${creator.id}`}
                 className="group block border border-border rounded-sm p-4 bg-card hover:border-muted-foreground/30 transition-all text-center"
               >
-                <Avatar className="w-16 h-16 mx-auto mb-3 ring-2 ring-border group-hover:ring-primary/40 transition-all">
+                <Avatar className="w-16 h-16 mx-auto mb-3 ring-2 ring-border group-hover:ring-foreground/40 transition-all">
                   <AvatarImage src={creator.avatar} alt={creator.name} />
                   <AvatarFallback className="bg-muted text-foreground">{creator.name[0]}</AvatarFallback>
                 </Avatar>
@@ -248,7 +248,7 @@ export default function HomePage() {
                   <Users className="w-3 h-3 text-muted-foreground" />
                   <span className="text-[10px] text-muted-foreground">{creator.followers}</span>
                 </div>
-                <span className="inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                <span className="inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full bg-muted text-foreground font-medium">
                   {creator.niche}
                 </span>
               </Link>
@@ -280,7 +280,7 @@ export default function HomePage() {
             >
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} className="w-3.5 h-3.5 fill-primary text-primary" />
+                  <Star key={j} className="w-3.5 h-3.5 fill-foreground text-foreground" />
                 ))}
               </div>
               <p className="text-sm text-foreground/80 leading-relaxed mb-5 font-body">
@@ -301,7 +301,7 @@ export default function HomePage() {
       {/* ── CTA ── */}
       <section className="py-16 border-t border-border text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <Zap className="w-8 h-8 text-primary mx-auto mb-4" />
+          <Zap className="w-8 h-8 text-foreground mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-3">
             Ready to unleash your nine lives?
           </h2>
