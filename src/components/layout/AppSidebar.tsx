@@ -43,6 +43,7 @@ const legalLinks = [
 ];
 
 export function AppSidebar() {
+  const { signOut } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
