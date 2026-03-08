@@ -55,7 +55,7 @@ export default function Pricing() {
         <p className="text-sm text-muted-foreground mt-2">Unlock the full creator operating system.</p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-3 gap-4">
         {plans.map((plan) => (
           <div
             key={plan.name}
