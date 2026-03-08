@@ -238,7 +238,7 @@ export default function HomePage() {
                 to={`/profile/${creator.id}`}
                 className="group block border border-border rounded-sm p-4 bg-card hover:border-muted-foreground/30 transition-all text-center"
               >
-                <Avatar className="w-16 h-16 mx-auto mb-3 ring-2 ring-border group-hover:ring-primary/40 transition-all">
+                <Avatar className="w-16 h-16 mx-auto mb-3 ring-2 ring-border group-hover:ring-foreground/40 transition-all">
                   <AvatarImage src={creator.avatar} alt={creator.name} />
                   <AvatarFallback className="bg-muted text-foreground">{creator.name[0]}</AvatarFallback>
                 </Avatar>
