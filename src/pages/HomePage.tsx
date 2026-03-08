@@ -280,7 +280,7 @@ export default function HomePage() {
             >
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} className="w-3.5 h-3.5 fill-primary text-primary" />
+                  <Star key={j} className="w-3.5 h-3.5 fill-foreground text-foreground" />
                 ))}
               </div>
               <p className="text-sm text-foreground/80 leading-relaxed mb-5 font-body">
