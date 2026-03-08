@@ -45,10 +45,10 @@ export default function Dashboard() {
       {/* Header */}
       <motion.div variants={item}>
         <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gradient-punk">
-          D'arc Dashboard
+          D'ARC Dashboard
         </h1>
         <p className="text-muted-foreground mt-1 font-body text-sm">
-          A creator social app for world builders and storytellers.
+          The creator's network.
         </p>
       </motion.div>
 

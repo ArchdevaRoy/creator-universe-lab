@@ -47,7 +47,7 @@ export function AppSidebar() {
           </div>
           {!collapsed && (
             <span className="font-display text-sm font-bold tracking-tight text-foreground">
-              D'arc
+              D'ARC
             </span>
           )}
         </div>
