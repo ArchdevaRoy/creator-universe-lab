@@ -20,6 +20,8 @@ import AppearanceSettings from "./pages/settings/AppearanceSettings";
 import Pricing from "./pages/Pricing";
 import FeedPage from "./pages/FeedPage";
 import ProfilePage from "./pages/ProfilePage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +50,8 @@ const App = () => (
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/feed" element={<FeedPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsConditions />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppLayout>
