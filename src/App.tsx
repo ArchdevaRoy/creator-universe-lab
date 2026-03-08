@@ -35,7 +35,8 @@ const App = () => (
       <BrowserRouter>
         <AppLayout>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/blueprint" element={<CreatorBlueprint />} />
             <Route path="/series" element={<SeriesBuilder />} />
             <Route path="/script" element={<ScriptStudio />} />
