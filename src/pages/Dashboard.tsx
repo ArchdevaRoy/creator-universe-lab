@@ -45,7 +45,7 @@ export default function Dashboard() {
       {/* Header */}
       <motion.div variants={item}>
         <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gradient-punk">
-          D'ARC Dashboard
+          Nine Lives
         </h1>
         <p className="text-muted-foreground mt-1 font-body text-sm">
           The creator's network.

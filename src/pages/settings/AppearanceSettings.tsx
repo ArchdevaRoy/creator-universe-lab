@@ -33,7 +33,7 @@ export default function AppearanceSettings() {
     <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 max-w-2xl">
       <div>
         <h1 className="text-2xl font-display font-bold text-gradient-punk">Appearance</h1>
-        <p className="text-sm text-muted-foreground mt-1">Customize the look and feel of D'arc.</p>
+        <p className="text-sm text-muted-foreground mt-1">Customize the look and feel of Nine Lives.</p>
       </div>
 
       <div className="space-y-2">
