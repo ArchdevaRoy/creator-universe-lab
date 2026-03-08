@@ -16,7 +16,7 @@ import SettingsPage from "./pages/SettingsPage";
 import ProfileSettings from "./pages/settings/ProfileSettings";
 import NotificationSettings from "./pages/settings/NotificationSettings";
 import AccountSettings from "./pages/settings/AccountSettings";
-import AppearanceSettings from "./pages/settings/AppearanceSettings";
+
 import Pricing from "./pages/Pricing";
 import FeedPage from "./pages/FeedPage";
 import ProfilePage from "./pages/ProfilePage";
