@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "@/assets/Logo_Ninelives.png";
 import {
+  Home,
   LayoutDashboard,
   Dna,
   Film,
@@ -18,7 +19,8 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-  { label: "Dashboard", icon: LayoutDashboard, path: "/" },
+  { label: "Home", icon: Home, path: "/" },
+  { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
   { label: "Creator Blueprint", icon: Dna, path: "/blueprint" },
   { label: "Series Builder", icon: Film, path: "/series" },
   { label: "Script Studio", icon: PenTool, path: "/script" },
