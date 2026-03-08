@@ -61,12 +61,6 @@ const tools = [
   { icon: Calendar, label: "Content Calendar", desc: "Strategic content scheduling", link: "/calendar" },
 ];
 
-const stats = [
-  { value: "10K+", label: "Creators" },
-  { value: "1M+", label: "Scripts Generated" },
-  { value: "500K+", label: "Hooks Analyzed" },
-  { value: "99%", label: "Uptime" },
-];
 
 const testimonials = [
   { name: "DarkMuse", avatar: "https://i.pravatar.cc/150?img=36", quote: "Nine Lives turned my chaotic ideas into a content machine. The hook analyzer alone tripled my engagement.", rating: 5 },
