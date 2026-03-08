@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "@/assets/Logo_Ninelives.png";
 import {
+  Home,
   LayoutDashboard,
   Dna,
   Film,
