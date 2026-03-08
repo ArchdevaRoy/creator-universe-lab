@@ -135,6 +135,13 @@ export function AppSidebar() {
             ))}
           </div>
         )}
+        <button
+          onClick={signOut}
+          className="flex items-center gap-3 px-3 py-2 rounded-sm text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all w-full"
+        >
+          <LogOut className="w-4 h-4 shrink-0" />
+          {!collapsed && <span>Sign Out</span>}
+        </button>
       </div>
     </div>
   );
