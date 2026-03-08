@@ -17,19 +17,31 @@ const plans = [
   },
   {
     name: "Pro",
-    price: "$19",
+    price: "$10",
     period: "/month",
     features: [
       "Everything in Free",
       "Unlimited Series Builder",
       "Script-to-Video Studio",
-      "Full Repurposing Engine",
-      "Thumbnail Generator",
       "Content Calendar",
       "Unlimited Hook Analysis",
-      "Export all formats",
     ],
     cta: "Upgrade to Pro",
+    active: false,
+    highlighted: false,
+  },
+  {
+    name: "Pro Max",
+    price: "$20",
+    period: "/month",
+    features: [
+      "Everything in Pro",
+      "Full Repurposing Engine",
+      "Thumbnail Generator",
+      "Export all formats",
+      "Priority support",
+    ],
+    cta: "Upgrade to Pro Max",
     active: false,
     highlighted: true,
   },
@@ -43,7 +55,7 @@ export default function Pricing() {
         <p className="text-sm text-muted-foreground mt-2">Unlock the full creator operating system.</p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-3 gap-4">
         {plans.map((plan) => (
           <div
             key={plan.name}
