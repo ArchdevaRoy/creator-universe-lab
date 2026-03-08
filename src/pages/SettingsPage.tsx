@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
-import { User, Bell, Shield, Palette } from "lucide-react";
+import { User, Bell, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const sections = [
   { icon: User, title: "Profile", desc: "Update your name, bio, and avatar", path: "/settings/profile" },
   { icon: Bell, title: "Notifications", desc: "Configure email and push notifications", path: "/settings/notifications" },
   { icon: Shield, title: "Account", desc: "Security, password, and data export", path: "/settings/account" },
-  { icon: Palette, title: "Appearance", desc: "Theme and display preferences", path: "/settings/appearance" },
 ];
 
 export default function SettingsPage() {

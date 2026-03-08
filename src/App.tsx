@@ -16,7 +16,7 @@ import SettingsPage from "./pages/SettingsPage";
 import ProfileSettings from "./pages/settings/ProfileSettings";
 import NotificationSettings from "./pages/settings/NotificationSettings";
 import AccountSettings from "./pages/settings/AccountSettings";
-import AppearanceSettings from "./pages/settings/AppearanceSettings";
+
 import Pricing from "./pages/Pricing";
 import FeedPage from "./pages/FeedPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -46,7 +46,7 @@ const App = () => (
             <Route path="/settings/profile" element={<ProfileSettings />} />
             <Route path="/settings/notifications" element={<NotificationSettings />} />
             <Route path="/settings/account" element={<AccountSettings />} />
-            <Route path="/settings/appearance" element={<AppearanceSettings />} />
+            
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/feed" element={<FeedPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
