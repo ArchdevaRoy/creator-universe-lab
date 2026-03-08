@@ -248,7 +248,7 @@ export default function HomePage() {
                   <Users className="w-3 h-3 text-muted-foreground" />
                   <span className="text-[10px] text-muted-foreground">{creator.followers}</span>
                 </div>
-                <span className="inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                <span className="inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full bg-muted text-foreground font-medium">
                   {creator.niche}
                 </span>
               </Link>
