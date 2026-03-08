@@ -61,12 +61,6 @@ const tools = [
   { icon: Calendar, label: "Content Calendar", desc: "Strategic content scheduling", link: "/calendar" },
 ];
 
-const stats = [
-  { value: "10K+", label: "Creators" },
-  { value: "1M+", label: "Scripts Generated" },
-  { value: "500K+", label: "Hooks Analyzed" },
-  { value: "99%", label: "Uptime" },
-];
 
 const testimonials = [
   { name: "DarkMuse", avatar: "https://i.pravatar.cc/150?img=36", quote: "Nine Lives turned my chaotic ideas into a content machine. The hook analyzer alone tripled my engagement.", rating: 5 },
@@ -152,23 +146,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Stats Bar ── */}
-      <section className="py-10 border-b border-border">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((stat) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="text-3xl font-display font-bold text-foreground">{stat.value}</div>
-              <div className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">{stat.label}</div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+
 
       {/* ── Tools Grid ── */}
       <section className="py-14">
