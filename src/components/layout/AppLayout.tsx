@@ -19,12 +19,22 @@ export function AppLayout({ children }: AppLayoutProps) {
           opacity: 0.07,
         }}
       />
+      {/* Crimson fog overlay */}
+      <div
+        className="fixed inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 70% 30%, hsl(0 80% 20% / 0.12) 0%, transparent 60%), " +
+            "radial-gradient(ellipse at 20% 80%, hsl(0 70% 18% / 0.1) 0%, transparent 50%), " +
+            "radial-gradient(ellipse at 50% 50%, hsl(0 60% 15% / 0.06) 0%, transparent 70%)",
+        }}
+      />
       {/* Dark vignette overlay */}
       <div
         className="fixed inset-0 z-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 40%, hsl(220 20% 4%) 100%)",
+            "radial-gradient(ellipse at center, transparent 30%, hsl(220 20% 4%) 100%)",
         }}
       />
 
