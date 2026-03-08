@@ -33,6 +33,11 @@ const bottomItems = [
   { label: "Settings", icon: Settings, path: "/settings" },
 ];
 
+const legalLinks = [
+  { label: "Privacy Policy", path: "/privacy" },
+  { label: "Terms & Conditions", path: "/terms" },
+];
+
 export function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
