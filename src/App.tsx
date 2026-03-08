@@ -50,6 +50,8 @@ const App = () => (
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/feed" element={<FeedPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsConditions />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppLayout>
