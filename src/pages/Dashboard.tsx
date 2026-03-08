@@ -48,7 +48,7 @@ export default function Dashboard() {
           Nine Lives
         </h1>
         <p className="text-muted-foreground mt-1 font-body text-sm">
-          The creator's network.
+          The creator's operating system.
         </p>
       </motion.div>
 
