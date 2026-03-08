@@ -185,7 +185,7 @@
   }
 
   .glow-line {
-    background: linear-gradient(90deg, transparent, hsl(0 50% 30%), transparent);
+    background: linear-gradient(90deg, transparent, hsl(0 60% 32%), transparent);
     height: 1px;
   }
 
