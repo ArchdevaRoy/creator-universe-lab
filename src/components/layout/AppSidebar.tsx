@@ -33,6 +33,11 @@ const bottomItems = [
   { label: "Settings", icon: Settings, path: "/settings" },
 ];
 
+const legalLinks = [
+  { label: "Privacy Policy", path: "/privacy" },
+  { label: "Terms & Conditions", path: "/terms" },
+];
+
 export function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -111,6 +116,20 @@ export function AppSidebar() {
             {!collapsed && <span>{item.label}</span>}
           </NavLink>
         ))}
+        {!collapsed && (
+          <div className="pt-2 px-3 space-y-0.5">
+            {legalLinks.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                onClick={() => setMobileOpen(false)}
+                className="block text-[10px] text-muted-foreground/60 hover:text-muted-foreground transition-colors"
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
