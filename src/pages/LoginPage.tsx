@@ -39,13 +39,8 @@ export default function LoginPage() {
     }
   };
 
-  const handleAppleLogin = async () => {
-    const { error } = await lovable.auth.signInWithOAuth("apple", {
-      redirect_uri: window.location.origin,
-    });
-    if (error) {
-      toast({ title: "Apple login failed", description: String(error), variant: "destructive" });
-    }
+  const handleComingSoon = (provider: string) => {
+    toast({ title: `${provider} coming soon`, description: `Sign in with ${provider} is not available yet. Stay tuned!` });
   };
 
   return (
