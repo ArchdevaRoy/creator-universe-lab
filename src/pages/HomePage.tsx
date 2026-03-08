@@ -197,7 +197,7 @@ export default function HomePage() {
                 <tool.icon className="w-6 h-6 text-foreground mb-4" />
                 <h3 className="font-display text-sm font-bold text-foreground mb-1">{tool.label}</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">{tool.desc}</p>
-                <div className="mt-4 flex items-center gap-1 text-xs text-muted-foreground group-hover:text-primary transition-colors">
+                <div className="mt-4 flex items-center gap-1 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
                   <span>Launch</span>
                   <ArrowRight className="w-3 h-3" />
                 </div>
