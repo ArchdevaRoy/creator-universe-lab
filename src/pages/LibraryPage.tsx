@@ -47,8 +47,8 @@ export default function LibraryPage() {
       );
 
     if (contentType !== "all") query = query.eq("content_type", contentType);
-    if (genre !== "all") query = query.eq("genre", genre);
-    if (category !== "all") query = query.eq("category", category);
+    if (genre !== "all") query = query.eq("genre", genre as any);
+    if (category !== "all") query = query.eq("category", category as any);
     if (search.trim()) query = query.ilike("title", `%${search.trim()}%`);
 
     const { data, error } = await query;
