@@ -124,6 +124,10 @@ const AppRoutes = () => (
       element={<ProtectedRoute><AppLayout><FeedPage /></AppLayout></ProtectedRoute>}
     />
     <Route
+      path="/library"
+      element={<ProtectedRoute><AppLayout><LibraryPage /></AppLayout></ProtectedRoute>}
+    />
+    <Route
       path="/profile/:id"
       element={<ProtectedRoute><AppLayout><ProfilePage /></AppLayout></ProtectedRoute>}
     />
