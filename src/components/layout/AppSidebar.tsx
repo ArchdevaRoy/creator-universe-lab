@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   Radio,
+  Library,
   LogOut,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,6 +32,7 @@ const navItems = [
   { label: "Hook Analyzer", icon: BarChart3, path: "/analyzer" },
   { label: "Analytics", icon: BarChart3, path: "/analytics" },
   { label: "Creator Feed", icon: Radio, path: "/feed" },
+  { label: "Library", icon: Library, path: "/library" },
 ];
 
 const bottomItems = [
