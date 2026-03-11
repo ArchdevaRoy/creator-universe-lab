@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   Radio,
+  Library,
   LogOut,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
