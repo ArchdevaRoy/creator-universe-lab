@@ -14,6 +14,92 @@ export type Database = {
   }
   public: {
     Tables: {
+      karma_events: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          milestone: number
+          points: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          milestone: number
+          points: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          milestone?: number
+          points?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "karma_events_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "library_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      library_items: {
+        Row: {
+          category: Database["public"]["Enums"]["content_category"]
+          content_type: Database["public"]["Enums"]["library_content_type"]
+          created_at: string
+          creator_id: string
+          description: string | null
+          duration_seconds: number | null
+          file_url: string | null
+          genre: Database["public"]["Enums"]["music_genre"]
+          id: string
+          karma_total: number
+          play_count: number
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["content_category"]
+          content_type: Database["public"]["Enums"]["library_content_type"]
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          duration_seconds?: number | null
+          file_url?: string | null
+          genre?: Database["public"]["Enums"]["music_genre"]
+          id?: string
+          karma_total?: number
+          play_count?: number
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["content_category"]
+          content_type?: Database["public"]["Enums"]["library_content_type"]
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          duration_seconds?: number | null
+          file_url?: string | null
+          genre?: Database["public"]["Enums"]["music_genre"]
+          id?: string
+          karma_total?: number
+          play_count?: number
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -46,13 +132,54 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      creator_karma: {
+        Row: {
+          creator_id: string | null
+          total_events: number | null
+          total_karma: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      award_karma: {
+        Args: { p_item_id: string; p_milestone: number; p_user_id: string }
+        Returns: Json
+      }
+      increment_play_count: { Args: { p_item_id: string }; Returns: undefined }
     }
     Enums: {
-      [_ in never]: never
+      content_category:
+        | "tutorial"
+        | "vlog"
+        | "podcast"
+        | "cinematic"
+        | "asmr"
+        | "documentary"
+        | "music-video"
+        | "short-film"
+        | "behind-the-scenes"
+        | "live-session"
+        | "remix"
+        | "original"
+        | "other"
+      library_content_type: "audio" | "video"
+      music_genre:
+        | "hip-hop"
+        | "electronic"
+        | "r-and-b"
+        | "rock"
+        | "lo-fi"
+        | "jazz"
+        | "classical"
+        | "pop"
+        | "ambient"
+        | "metal"
+        | "soul"
+        | "reggae"
+        | "country"
+        | "latin"
+        | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -179,6 +306,40 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      content_category: [
+        "tutorial",
+        "vlog",
+        "podcast",
+        "cinematic",
+        "asmr",
+        "documentary",
+        "music-video",
+        "short-film",
+        "behind-the-scenes",
+        "live-session",
+        "remix",
+        "original",
+        "other",
+      ],
+      library_content_type: ["audio", "video"],
+      music_genre: [
+        "hip-hop",
+        "electronic",
+        "r-and-b",
+        "rock",
+        "lo-fi",
+        "jazz",
+        "classical",
+        "pop",
+        "ambient",
+        "metal",
+        "soul",
+        "reggae",
+        "country",
+        "latin",
+        "other",
+      ],
+    },
   },
 } as const
