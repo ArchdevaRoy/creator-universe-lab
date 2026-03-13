@@ -25,6 +25,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Pricing from "./pages/Pricing";
 import FeedPage from "./pages/FeedPage";
 import LibraryPage from "./pages/LibraryPage";
+import WalletPage from "./pages/WalletPage";
 import ProfilePage from "./pages/ProfilePage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
@@ -126,6 +127,10 @@ const AppRoutes = () => (
     <Route
       path="/library"
       element={<ProtectedRoute><AppLayout><LibraryPage /></AppLayout></ProtectedRoute>}
+    />
+    <Route
+      path="/wallet"
+      element={<ProtectedRoute><AppLayout><WalletPage /></AppLayout></ProtectedRoute>}
     />
     <Route
       path="/profile/:id"

@@ -17,6 +17,7 @@ import {
   X,
   Radio,
   Library,
+  Wallet,
   LogOut,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,6 +34,7 @@ const navItems = [
   { label: "Analytics", icon: BarChart3, path: "/analytics" },
   { label: "Creator Feed", icon: Radio, path: "/feed" },
   { label: "Library", icon: Library, path: "/library" },
+  { label: "Wallet", icon: Wallet, path: "/wallet" },
 ];
 
 const bottomItems = [

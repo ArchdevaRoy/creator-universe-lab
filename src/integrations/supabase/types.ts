@@ -100,6 +100,42 @@ export type Database = {
         }
         Relationships: []
       }
+      payout_requests: {
+        Row: {
+          cash_amount: number
+          created_at: string
+          id: string
+          karma_amount: number
+          notes: string | null
+          processed_at: string | null
+          status: Database["public"]["Enums"]["payout_status"]
+          stripe_transfer_id: string | null
+          user_id: string
+        }
+        Insert: {
+          cash_amount: number
+          created_at?: string
+          id?: string
+          karma_amount: number
+          notes?: string | null
+          processed_at?: string | null
+          status?: Database["public"]["Enums"]["payout_status"]
+          stripe_transfer_id?: string | null
+          user_id: string
+        }
+        Update: {
+          cash_amount?: number
+          created_at?: string
+          id?: string
+          karma_amount?: number
+          notes?: string | null
+          processed_at?: string | null
+          status?: Database["public"]["Enums"]["payout_status"]
+          stripe_transfer_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -130,6 +166,72 @@ export type Database = {
         }
         Relationships: []
       }
+      wallet_transactions: {
+        Row: {
+          cash_amount: number
+          created_at: string
+          description: string | null
+          id: string
+          karma_amount: number
+          reference_id: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          cash_amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          karma_amount?: number
+          reference_id?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          cash_amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          karma_amount?: number
+          reference_id?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wallets: {
+        Row: {
+          created_at: string
+          id: string
+          karma_balance: number
+          karma_lifetime: number
+          stripe_account_id: string | null
+          total_paid_out: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          karma_balance?: number
+          karma_lifetime?: number
+          stripe_account_id?: string | null
+          total_paid_out?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          karma_balance?: number
+          karma_lifetime?: number
+          stripe_account_id?: string | null
+          total_paid_out?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       creator_karma: {
@@ -140,6 +242,16 @@ export type Database = {
         }
         Relationships: []
       }
+      karma_leaderboard: {
+        Row: {
+          avatar_url: string | null
+          display_name: string | null
+          karma_balance: number | null
+          karma_lifetime: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       award_karma: {
@@ -147,6 +259,10 @@ export type Database = {
         Returns: Json
       }
       increment_play_count: { Args: { p_item_id: string }; Returns: undefined }
+      request_payout: {
+        Args: { p_karma_amount: number; p_user_id: string }
+        Returns: Json
+      }
     }
     Enums: {
       content_category:
@@ -180,6 +296,12 @@ export type Database = {
         | "country"
         | "latin"
         | "other"
+      payout_status:
+        | "pending"
+        | "processing"
+        | "completed"
+        | "failed"
+        | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -339,6 +461,13 @@ export const Constants = {
         "country",
         "latin",
         "other",
+      ],
+      payout_status: [
+        "pending",
+        "processing",
+        "completed",
+        "failed",
+        "rejected",
       ],
     },
   },
