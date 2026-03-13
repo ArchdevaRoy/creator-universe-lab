@@ -131,6 +131,7 @@ const AppRoutes = () => (
     <Route
       path="/wallet"
       element={<ProtectedRoute><AppLayout><WalletPage /></AppLayout></ProtectedRoute>}
+    />
     <Route
       path="/profile/:id"
       element={<ProtectedRoute><AppLayout><ProfilePage /></AppLayout></ProtectedRoute>}
