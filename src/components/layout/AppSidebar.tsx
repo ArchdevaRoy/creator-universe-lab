@@ -17,6 +17,7 @@ import {
   X,
   Radio,
   Library,
+  Wallet,
   LogOut,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
